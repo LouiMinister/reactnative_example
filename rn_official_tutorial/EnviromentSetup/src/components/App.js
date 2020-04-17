@@ -30,13 +30,14 @@ const App = () => {
   const [count, setCount] = useState(0);
 
   const _updateCount = () =>{
-    setCount(count + 1);
+    setCount(count + 2);
   }
 
 
   return (
     <>
       <View style={styles.container}>
+        <Text > asdfaf</Text>
         <Button
           color="green"
           title={count.toString()}
