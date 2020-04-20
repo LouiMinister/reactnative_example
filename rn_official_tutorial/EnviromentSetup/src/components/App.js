@@ -7,89 +7,53 @@
  */
 
 import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Button
-} from 'react-native';
+//import ButtonStack from '../screens';
+import { View, Text, Button } from 'react-native';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const HomeScreen = ({navigation}) => {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+      <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate('Details')}
+      />
+    </View>
+  );
+}
 
-import TestComponent from './TestComponent';
+function DetailsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Details Screen</Text>
+      <Button
+        title="Go to Details... again"
+        onPress={() => navigation.push('Details')}
+      />
+      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+      <Button title="Go back" onPress={() => navigation.goBack()} />
+      <Button
+        title="Go back to first screen in stack"
+        onPress={() => navigation.popToTop()}
+      />
+    </View>
+  );
+}
 
-
-const sampe_data = [
-  {id:"gdHong",count:0,color:"red"},
-  {id:"ksYu",count:0,color:"green"},
-  {id:"ssLee",count:0,color:"blue"},
-];
+const Stack = createStackNavigator();
 
 const App = () => {
-  const [count, setCount] = useState(0);
-  const [datas, setDatas] = useState(sampe_data);
-
-  const _updateCount = (idx) =>{
-    setCount(count+1);
-  }
-
-  const updateCount = (idx) =>{
-    const newDatas = [...datas];
-    newDatas[idx].count = newDatas[idx].count +1;
-    
-    setDatas(newDatas);
-  }
-
-  console.log(datas);
-
-
   return (
-    <>
-      <View style={styles.container}>
-        <Text > asdf</Text>
-        <Button
-          color="green"
-          title={count.toString()}
-          onPress={() => _updateCount()} 
-        />
-        {
-          datas.map((data, index) =>{
-            console.log(index);
-            return (
-              <TestComponent 
-                key={data.id}
-                id={data.id}
-                color={data.color}
-                title={data.count.toString()}
-                updateCount={()=>updateCount(index)}
-              />
-            )
-          })
-        }
-      </View>
-    </>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-
-
-
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-});
-
+}
 
 
 export default App;
