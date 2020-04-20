@@ -25,24 +25,56 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import TestComponent from './TestComponent';
+
+
+const sampe_data = [
+  {id:"gdHong",count:0,color:"red"},
+  {id:"ksYu",count:0,color:"green"},
+  {id:"ssLee",count:0,color:"blue"},
+];
+
 const App = () => {
-
   const [count, setCount] = useState(0);
+  const [datas, setDatas] = useState(sampe_data);
 
-  const _updateCount = () =>{
-    setCount(count + 2);
+  const _updateCount = (idx) =>{
+    setCount(count+1);
   }
+
+  const updateCount = (idx) =>{
+    const newDatas = [...datas];
+    newDatas[idx].count = newDatas[idx].count +1;
+    
+    setDatas(newDatas);
+  }
+
+  console.log(datas);
 
 
   return (
     <>
       <View style={styles.container}>
-        <Text > asdfaf</Text>
+        <Text > asdf</Text>
         <Button
           color="green"
           title={count.toString()}
           onPress={() => _updateCount()} 
-          />
+        />
+        {
+          datas.map((data, index) =>{
+            console.log(index);
+            return (
+              <TestComponent 
+                key={data.id}
+                id={data.id}
+                color={data.color}
+                title={data.count.toString()}
+                updateCount={()=>updateCount(index)}
+              />
+            )
+          })
+        }
       </View>
     </>
   );
