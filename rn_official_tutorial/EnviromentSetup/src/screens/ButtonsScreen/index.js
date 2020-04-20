@@ -17,7 +17,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import TestComponent from '../components/TestComponent';
+import TestComponent from './TestComponent';
 
 
 const sampe_data = [
@@ -55,14 +55,13 @@ const ButtonScreen = () => {
         />
         {
           datas.map((data, index) =>{
-            console.log(index);
             return (
               <TestComponent 
                 key={data.id}
                 id={data.id}
                 color={data.color}
                 title={data.count.toString()}
-                update={()=>updateCount(index)}
+                updateCount={()=>updateCount(index)}
               />
             )
           })
