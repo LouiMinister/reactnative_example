@@ -8,16 +8,16 @@ import {
   Text,
 } from 'react-native';
 
-const TestComponent = (props) =>{
+const TestComponent = ({id, color, title, updateCount}) =>{
 
     return(
     <>
       <View>
-        <Text>{props.id}의 버튼</Text>
+        <Text>{id}의 버튼</Text>
         <Button
-          color={props.color}
-          title={props.title}
-          onPress={props.updateCount}/>
+          color={color}
+          title={title}
+          onPress={updateCount}/>
       </View>
     </>
     )
