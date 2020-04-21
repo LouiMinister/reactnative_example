@@ -6,17 +6,21 @@ import { createStackNavigator } from '@react-navigation/stack';
 const HomeScreen = ({navigation}) => {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
+       
         <Button
           title="Go to Details"
           onPress={() => navigation.navigate('Details')}
         />
         <Button
-            title="Go to Buttons"
+            title="Go to Buttons!!"
             onPress={() => navigation.navigate('Buttons')}
+        />
+        <Button
+          title="Go to Web"
+          onPress={() => navigation.navigate('Web')}
         />
       </View>
     );
-}
+};
 
 export default HomeScreen;
