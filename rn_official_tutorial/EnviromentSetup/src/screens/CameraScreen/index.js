@@ -6,7 +6,7 @@ import React, {useState} from 'react';
 
 const CameraScreen = ({navigation}) => {
     let camera;
-    
+
     const takePicture = async () => {
         if (camera) {
           const options = { quality: 0.5, base64: true };
@@ -45,6 +45,9 @@ const CameraScreen = ({navigation}) => {
         <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
           <TouchableOpacity onPress={()=>takePicture()} style={styles.capture}>
             <Text style={{ fontSize: 14 }}> SNAP </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>takePicture()} style={styles.capture}>
+            <Text style={{ fontSize: 14 }}> Clear </Text>
           </TouchableOpacity>
         </View>
       </View>
