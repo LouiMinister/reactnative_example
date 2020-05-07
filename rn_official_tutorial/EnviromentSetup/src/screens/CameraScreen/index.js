@@ -9,12 +9,20 @@ import React, {useState} from 'react';
 
 const CameraScreen = ({navigation}) => {
     let camera;
+ 
+    const [imgPath, setImgPath] = useState("");
+
+    const remove_path_prefix = (path) => { 
+        const prefix = "file://";
+        return path.slice( path.indexOf(prefix)+ prefix.length);
+    }
 
     const takePicture = async () => {
         if (camera) {
           const options = { quality: 0.5, base64: true };
           const data = await camera.takePictureAsync(options);
-          console.log(data.uri);
+          console.log(remove_path_prefix(data.uri));
+          setImgPath(remove_path_prefix(data.uri));
         }
     };
 
@@ -25,8 +33,35 @@ const CameraScreen = ({navigation}) => {
         }).catch(err => {
             console.log('error');
         });
-    
     }
+
+    const postImage = async () => {
+        const uri = "https://basmtest.ktbcredit.com:8443/api/flutter";
+        console.log("post");
+
+        const files =[
+            {
+                name: 'img',
+                filename: 'test.png',
+                filepath: imgPath,
+                filetype: 'application/octet-stream',
+            },
+        ];
+
+        RNFS.uploadFiles({
+            toUrl : uri,
+            files: files,
+            method: 'POST',
+        }).promise.then((response)=> {
+            if (response.statusCode == 200) {
+                console.log('FILES UPLOADED!'); // response.statusCode, response.headers, response.body
+              } else {
+                console.log('SERVER ERROR');
+              }
+        }).catch((err)=>{
+            console.log(err);
+        });
+    };
 
     return(
         <>
@@ -62,6 +97,11 @@ const CameraScreen = ({navigation}) => {
           <TouchableOpacity onPress={()=>clearFiles()} style={styles.capture}>
             <Text style={{ fontSize: 14 }}> Clear </Text>
           </TouchableOpacity>
+        {imgPath != "" && (
+          <TouchableOpacity onPress={()=>postImage()} style={styles.capture}>
+              <Text style={{ fontSize: 14 }}> Post! </Text>
+          </TouchableOpacity>
+        )}
         </View>
       </View>
         </>
